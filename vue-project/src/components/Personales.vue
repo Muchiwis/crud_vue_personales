@@ -1,12 +1,10 @@
-
 <template>
     <div class="contet">
         <div>
-            <button class="btn btn-primary nuevo">Nuevo registro</button>
+            <router-link :to="'/form/' + 0"><button class="btn btn-primary nuevo">Nuevo registro</button></router-link>
         </div>
         <table class="table table-dark">
             <thead>
-                <!-- <tr v-for="(item, index) in mostrarDatos()" :key="index"> -->
                 <tr>
                     <th>#</th>
                     <th>Nombre</th>
@@ -24,7 +22,7 @@
                     <td>{{ item.texto }}</td>
                     <td>{{ item.celular }}</td>
                     <td>
-                        <button class="btn btn-success edit">Editar</button>
+                        <router-link :to="'/form/' + item.id"><button class="btn btn-success edit">Editar</button></router-link>
                         <button class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
@@ -33,8 +31,9 @@
         </table>
     </div>
 </template>
+
 <script setup>
-    import { obtenerLista,obtenerPersonal,EliminarPersonal, todoDato, crearPersonal, actualizarPersonal } from "../composables/personajes";
+import { obtenerLista,obtenerPersonal,EliminarPersonal, todoDato, crearPersonal, actualizarPersonal } from "../composables/personajes";
     import { ref, onMounted } from "vue";
 
     const mostrarDatos = async () =>{
@@ -48,9 +47,6 @@
     onMounted(() => {
         obtenerLista();
     });
-    
-    todoDato.value = obtenerLista();
-
     const mostrarPersonal = async (id) => {
         let imprimir = await obtenerPersonal(id);
         console.log(imprimir);
@@ -65,27 +61,9 @@
         apellido: "Prueba apellido 2 mishell and lorena",
         texto: "Prueba texto 2",
         celular: 9456789,
-    };
-
-    const insertarDatos = async (datosAgregar) => {
-        const respuesta = await crearPersonal(datosAgregar);
-        console.log(respuesta);
-    }
-
-    const actualizarDatos = async (datosAgregar,id) => {
-        const respuesta = await actualizarPersonal(datosAgregar,id);
-        console.log(respuesta);
-    }
-
-    // insertarDatos(datosAgregar);
-    //mostrarDatos();  
-    //actualizarDatos(datosAgregar,4);
-    //mostrarPersonal(4)
-
-
+    }; 
 </script>
-
-
+    
 <style scope>
     h1{
         color: #000;
